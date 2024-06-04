@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+    <div class="flex h-screen justify-center items-center">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+            <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Login to Your Account</h2>
+            <form id="myForm" method="POST">
+                <div class="mb-4">
+                    <label for="email" class="block text-sm text-gray-800 font-semibold mb-2">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email"
+                        class="bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 px-4 py-2 w-full">
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-sm text-gray-800 font-semibold mb-2">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password"
+                        class="bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 px-4 py-2 w-full">
+                </div>
+                <div class="mb-4">
+                    <label for="role" class="block text-sm text-gray-800 font-semibold mb-2">Select Role</label>
+                    <select name="role" id="role"
+                        class="bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 px-4 py-2 w-full">
+                        <option value="employee" selected>Employee</option>
+                        <option value="admin">Administrator</option>
+                    </select>
+                </div>
+                <p class="text-gray-700 text-sm mb-4">Don't have an account? <a href="/register"
+                        class="text-blue-500 hover:underline">Create Account</a></p>
+                <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg w-full">Submit</button>
+            </form>
+            <p id="message" class="text-red-500 text-center mt-4"></p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('myForm').onsubmit = async function (event) {
+            event.preventDefault();
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+            let role = document.getElementById('role').value;
+            let data = { email: email, password: password, role: role };
+
+            try {
+                let response = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                let result = await response.json();
+
+                if (response.ok) {
+                    window.location.href = result.redirectUrl; // Redirect based on the server response
+                } else {
+                    if (response.status === 403) {
+                        document.getElementById('message').innerHTML = result.message;
+                    } else {
+                        // Other error
+                        document.getElementById('message').textContent = result.message;
+                        document.getElementById('email').value = '';
+                        document.getElementById('password').value = '';
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while logging in');
+            }
+        };
+
+    </script>
+</body>
+
+</html>

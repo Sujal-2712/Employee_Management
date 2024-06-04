@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="flex h-screen justify-center items-center">
+        <div class="bg-white p-8 rounded-lg shadow-md max-w-lg">
+            <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Create your account</h2>
+            <form action="/register" method="POST" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="fname" class="block text-sm text-gray-800 font-semibold">First Name</label>
+                        <input type="text" id="fname" name="fname" placeholder="Enter your first name"
+                            class="bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 px-4 py-2 w-full" required>
+                    </div>
+                    <div>
+                        <label for="lname" class="block text-sm text-gray-800 font-semibold">Last Name</label>
+                        <input type="text" id="lname" name="lname" placeholder="Enter your last name"
+                            class="bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 px-4 py-2 w-full">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="phone" class="block text-sm text-gray-800 font-semibold">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number"
+                        class="bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 px-4 py-2 w-full" required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-sm text-gray-800 font-semibold">Your Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email address"
+                        class="bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 px-4 py-2 w-full" required>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-sm text-gray-800 font-semibold">Your Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password"
+                        class="bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 px-4 py-2 w-full" required>
+                </div>
+                <div class="mb-6">
+                    <label for="repeat-password" class="block text-sm text-gray-800 font-semibold">Repeat Password</label>
+                    <input type="password" id="repeat-password" name="cpassword" placeholder="Repeat your password"
+                        class="bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 px-4 py-2 w-full" required>
+                </div>
+                <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg w-full">Register new account</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

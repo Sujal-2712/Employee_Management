@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./../css/output.css">
+    <style>
+        .low {
+            color: green;
+        }
+
+        .medium {
+            color: blue;
+        }
+
+        .high {
+            color: red;
+        }
+
+        .dialog-box {
+            background-color: rgb(233, 233, 233);
+            padding: 8px;
+            border: 2px solid #000;
+            font-family: Arial, sans-serif;
+            min-width: 320px;
+            margin-top: 8px;
+            color: rgb(0, 0, 0);
+            overflow: hidden;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-sky-600">
+        <nav class="border-b border-gray-200 top-0 start-0">
+            <div class="flex flex-wrap justify-between lg:p-4 p-2 px-4">
+                <a href="/" class="flex flex-col rtl:space-x-reverse lg:mx-0">
+                    <span class="text-2xl lg:text-3xl font-bold text-white">Task
+                        Section</span>
+                    <span id="username" class="text-sm lg:text-lg font-bold text-white">Username:
+                        <% if (locals.first_name && locals.last_name) { %>
+                            <%= locals.first_name %> <%= locals.last_name %>
+                        <% } %>
+                    </span>
+                </a>
+                <div class="flex md:order-2  space-x-3 md:space-x-0 rtl:space-x-reverse">
+                    <!-- Modal toggle -->
+                    <div class="py-3">
+                    <button id="menuToggle" data-collapse-target="mobileMenu" type="button"
+                        class="inline-flex mr-2 items-center p-2 w-10 h-10 justify-center text-sm text-slate-900 rounded-lg md:hidden hover:bg-gray-100"
+                        aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 17 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M1 1h15M1 7h15M1 13h15" />
+                        </svg>
+                    </button>
+                    <button id="addTask" data-modal-target="crud-modal" data-modal-toggle="crud-modal" 0
+                        class="hidden md:block text-white bg-slate-800 hover:bg-slate-600 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                        type="button">
+                        Add task
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden fixed w-full bg-sky-600 border-gray-200 p-4">
+            <button id="addTask" data-modal-target="crud-modal" data-modal-toggle="crud-modal"
+                class="w-[35%] mx-3 md:w-auto mb-2 md:mb-0 text-white bg-slate-800 hover:bg-slate-600 focus:ring-4 font-medium rounded-xl text-sm px-5 py-2.5 text-center md:mr-4"
+                type="button">
+                Add Task
+            </button>
+        </div>
+
+    </div>
+
+    <section class="">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 px-5 gap-5 mt-0 lg:mt-5 mx-2 lg:mx-0 h-full">
+
+            <div class="p-4 border-2 border-gray-400 rounded-lg  shadow-md mt-5 lg:mt-0 ">
+                <h5 class="mb-4 text-2xl lg:text-3xl font-extrabold tracking-tight text-gray-900">Pending Tasks</h5>
+                <!-- Task List -->
+                <ul class="mb-4" id="pending-list">
+                    <!-- Tasks go here -->
+                </ul>
+                <!-- Additional Content or Buttons Here -->
+            </div>
+
+            <div class="p-4 border-2 border-gray-400 rounded-lg  shadow-md mt-5 lg:mt-0">
+                <h5 class="mb-4 text-2xl lg:text-3xl font-extrabold tracking-tight text-gray-900">Working Tasks</h5>
+                <!-- Task List -->
+                <ul class="mb-4" id="working-list">
+                    <!-- Tasks go here -->
+                </ul>
+                <!-- Additional Content or Buttons Here -->
+            </div>
+
+            <div class="p-6 bg-white border-2 border-gray-400 rounded-lg shadow-lg ">
+                <h5 class="mb-4 text-2xl lg:text-3xl font-extrabold tracking-tight text-gray-900">Completed Tasks</h5>
+                <!-- Task List -->
+                <ul class="mb-4" id="complete-list">
+                    <!-- Tasks go here -->
+                </ul>
+                <!-- Additional Content or Buttons Here -->
+            </div>
+
+            <div class="p-6 bg-white border-2 border-gray-400 rounded-lg shadow-lg">
+                <h5 class="mb-4 text-2xl lg:text-3xl font-extrabold tracking-tight text-gray-900">Review Tasks</h5>
+                <!-- Task List -->
+                <ul class="mb-4" id="review-list">
+                    <!-- Tasks go here -->
+                </ul>
+                <!-- Additional Content or Buttons Here -->
+            </div>
+
+
+        </div>
+
+
+
+    </section>
+
+    <!-- Main modal -->
+    <div id="crud-modal" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-2 w-full max-w-md max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow p-2">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-2 md:p-5 border-b rounded-t">
+                    <h3 class="text-lg font-semibold text-gray-900">
+                        Add Announcement
+                    </h3>
+                    <button type="button"
+                        class="text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700 rounded-lg w-8 h-8 inline-flex justify-center items-center"
+                        data-modal-toggle="crud-modal">
+                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <form class="p-2 md:p-5" method="post" action="/user/task/addtask">
+                    <div class="grid gap-2 md:gap-4 mb-2 md:mb-4 grid-cols-1">
+                        <div>
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Task
+                                Title</label>
+                            <input type="text" name="task_title" id="name"
+                                class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-3"
+                                placeholder="Type here.." required="">
+                        </div>
+                        <div>
+                            <label for="priority" class="block mb-2 text-sm font-medium text-gray-900">Task
+                                Priority</label>
+                            <select id="priority" name="task_priority"
+                                class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-3">
+                                <option value="low" selected>Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="employeeList" class="block mb-2 text-sm font-medium text-gray-900">Assigned
+                                To</label>
+                            <select id="employeeList" name="employee_name"
+                                class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-3">
+                                <!-- Add your employee options here -->
+                            </select>
+                        </div>
+                        <div>
+                            <label for="description" class="block mb-2 text-sm font-medium text-gray-900">Task
+                                Description</label>
+                            <textarea id="description" rows="4" name="task_description"
+                                class="block p-3 w-full text-sm text-gray-900 bg-gray-100 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="Write task description here"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full md:w-auto">
+                        <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        Add New Task
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script src="./../js/taskController.js" type="text/javascript"></script>
+</body>
+
+</html>
