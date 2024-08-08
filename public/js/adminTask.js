@@ -1,5 +1,7 @@
+
+
 function getAlltasks() {
-    fetch("/api/tasks") // Assuming your server endpoint for fetching tasks is '/api/tasks'
+    fetch("/api/tasks") // endpoint for fetching tasks is '/api/tasks'
       .then((response) => response.json())
       .then((tasks) => {
         console.log("Tasks received:", tasks); // Log the tasks array

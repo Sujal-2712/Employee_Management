@@ -10,7 +10,6 @@ const handelUserSignIn = async (req, res) => {
   try {
     const result = await queryDatabase(sql);
     let user = result;
-    console.log(user);
     if (user[0] == undefined) {
       return res.status(404).json({ message: "User not found!!", error: 1 });
     }
